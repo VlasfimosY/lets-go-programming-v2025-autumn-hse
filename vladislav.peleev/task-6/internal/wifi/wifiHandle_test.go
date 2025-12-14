@@ -1,3 +1,5 @@
+//go:generate mockery --name=WiFiHandle --output=. --filename=WiFiHandle_test.go --inpackage
+
 package wifi_test
 
 import wifilib "github.com/mdlayher/wifi"

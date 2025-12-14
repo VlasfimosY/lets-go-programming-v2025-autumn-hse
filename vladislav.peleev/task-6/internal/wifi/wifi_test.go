@@ -23,9 +23,9 @@ func TestWiFiService_GetAddresses_Success(t *testing.T) {
 		},
 	}
 
-	service := wifi.New(mockHandle)
+	wifiService := wifi.New(mockHandle)
 
-	addrs, err := service.GetAddresses()
+	addrs, err := wifiService.GetAddresses()
 	require.NoError(t, err)
 	assert.Equal(t, []net.HardwareAddr{addr1, addr2}, addrs)
 }
@@ -37,9 +37,9 @@ func TestWiFiService_GetAddresses_Error(t *testing.T) {
 		err: assert.AnError,
 	}
 
-	service := wifi.New(mockHandle)
+	wifiService := wifi.New(mockHandle)
 
-	_, err := service.GetAddresses()
+	_, err := wifiService.GetAddresses()
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "getting interfaces:")
 }
@@ -56,9 +56,9 @@ func TestWiFiService_GetNames_Success(t *testing.T) {
 		},
 	}
 
-	service := wifi.New(mockHandle)
+	wifiService := wifi.New(mockHandle)
 
-	names, err := service.GetNames()
+	names, err := wifiService.GetNames()
 	require.NoError(t, err)
 	assert.Equal(t, []string{"wlan0", "lo"}, names)
 }
@@ -70,9 +70,9 @@ func TestWiFiService_GetNames_Error(t *testing.T) {
 		err: assert.AnError,
 	}
 
-	service := wifi.New(mockHandle)
+	wifiService := wifi.New(mockHandle)
 
-	_, err := service.GetNames()
+	_, err := wifiService.GetNames()
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "getting interfaces:")
 }
