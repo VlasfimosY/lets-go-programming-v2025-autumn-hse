@@ -20,7 +20,9 @@ func (m *WiFiHandle) Interfaces() ([]*wifilib.Interface, error) {
 	if rf, ok := ret.Get(0).(func() []*wifilib.Interface); ok {
 		r0 = rf()
 	} else if ret.Get(0) != nil {
-		r0 = ret.Get(0).([]*wifilib.Interface)
+		if ret.Get(0) != nil {
+    			r0 = ret.Get(0).([]*wifilib.Interface)
+		}
 	}
 
 	var r1 error
@@ -35,7 +37,7 @@ func (m *WiFiHandle) Interfaces() ([]*wifilib.Interface, error) {
 
 type mockTestingT interface {
 	mock.TestingT
-	Cleanup(func())
+	Cleanup(f func())
 }
 
 // NewWiFiHandle creates a new instance of WiFiHandle.
@@ -43,6 +45,8 @@ type mockTestingT interface {
 func NewWiFiHandle(t mockTestingT) *WiFiHandle {
 	mockObj := &WiFiHandle{}
 	mockObj.Mock.Test(t)
+
 	t.Cleanup(func() { mockObj.AssertExpectations(t) })
+
 	return mockObj
 }
