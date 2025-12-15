@@ -77,7 +77,6 @@ func TestGetNames_ScanError(t *testing.T) {
 
 	dbService := db.New(dbConn)
 	_, err = dbService.GetNames()
-	require.Error(t, err)
 	require.ErrorContains(t, err, "rows scanning:")
 	require.NoError(t, mock.ExpectationsWereMet())
 }
@@ -147,7 +146,6 @@ func TestGetUniqueNames_ScanError(t *testing.T) {
 
 	dbService := db.New(dbConn)
 	_, err = dbService.GetUniqueNames()
-	require.Error(t, err)
 	require.ErrorContains(t, err, "rows scanning:")
 	require.NoError(t, mock.ExpectationsWereMet())
 }
@@ -165,7 +163,6 @@ func TestGetNames_RowsErr(t *testing.T) {
 
 	dbService := db.New(dbConn)
 	_, err = dbService.GetNames()
-	require.Error(t, err)
 	require.ErrorContains(t, err, "rows error:")
 	require.NoError(t, mock.ExpectationsWereMet())
 }
@@ -183,7 +180,6 @@ func TestGetUniqueNames_RowsErr(t *testing.T) {
 
 	dbService := db.New(dbConn)
 	_, err = dbService.GetUniqueNames()
-	require.Error(t, err)
 	require.ErrorContains(t, err, "rows error:")
 	require.NoError(t, mock.ExpectationsWereMet())
 }
