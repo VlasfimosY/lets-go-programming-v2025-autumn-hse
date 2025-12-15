@@ -19,9 +19,9 @@ func (m *WiFiHandle) Interfaces() ([]*wifilib.Interface, error) {
 	var r0 []*wifilib.Interface
 	if rf, ok := ret.Get(0).(func() []*wifilib.Interface); ok {
 		r0 = rf()
-	} else if ret.Get(0) != nil {
+	} else {
 		if ret.Get(0) != nil {
-    			r0 = ret.Get(0).([]*wifilib.Interface)
+			r0 = ret.Get(0).([]*wifilib.Interface)
 		}
 	}
 
