@@ -6,21 +6,21 @@ import (
 
 	"github.com/VlasfimosY/task-6/internal/wifi"
 	wifilib "github.com/mdlayher/wifi"
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+//go:generate mockery --name=WiFiHandle --testonly --quiet --outpkg wifi_test --output .
 
 func TestWiFiService_GetAddresses_Error(t *testing.T) {
 	t.Parallel()
 
 	mockHandle := NewWiFiHandle(t)
-	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), assert.AnError)
+	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), require.AnError)
 
 	wifiService := wifi.New(mockHandle)
 
 	_, err := wifiService.GetAddresses()
-	require.Error(t, err)
-	assert.Contains(t, err.Error(), "getting interfaces:")
+	require.ErrorContains(t, err, "getting interfaces:")
 }
 
 func TestWiFiService_GetAddresses_Success(t *testing.T) {
@@ -39,20 +39,19 @@ func TestWiFiService_GetAddresses_Success(t *testing.T) {
 
 	addrs, err := wifiService.GetAddresses()
 	require.NoError(t, err)
-	assert.Equal(t, []net.HardwareAddr{addr1, addr2}, addrs)
+	require.Equal(t, []net.HardwareAddr{addr1, addr2}, addrs)
 }
 
 func TestWiFiService_GetNames_Error(t *testing.T) {
 	t.Parallel()
 
 	mockHandle := NewWiFiHandle(t)
-	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), assert.AnError)
+	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), require.AnError)
 
 	wifiService := wifi.New(mockHandle)
 
 	_, err := wifiService.GetNames()
-	require.Error(t, err)
-	assert.Contains(t, err.Error(), "getting interfaces:")
+	require.ErrorContains(t, err, "getting interfaces:")
 }
 
 func TestWiFiService_GetNames_Success(t *testing.T) {
@@ -70,5 +69,5 @@ func TestWiFiService_GetNames_Success(t *testing.T) {
 
 	names, err := wifiService.GetNames()
 	require.NoError(t, err)
-	assert.Equal(t, []string{"wlan0", "lo"}, names)
+	require.Equal(t, []string{"wlan0", "lo"}, names)
 }
