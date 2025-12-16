@@ -1,6 +1,7 @@
 package wifi_test
 
 import (
+	"errors"
 	"net"
 	"testing"
 
@@ -15,7 +16,7 @@ func TestWiFiService_GetAddresses_Error(t *testing.T) {
 	t.Parallel()
 
 	mockHandle := NewWiFiHandle(t)
-	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), require.AnError)
+	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), errors.New("mock error"))
 
 	wifiService := wifi.New(mockHandle)
 
@@ -46,7 +47,7 @@ func TestWiFiService_GetNames_Error(t *testing.T) {
 	t.Parallel()
 
 	mockHandle := NewWiFiHandle(t)
-	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), require.AnError)
+	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), errors.New("mock error"))
 
 	wifiService := wifi.New(mockHandle)
 
