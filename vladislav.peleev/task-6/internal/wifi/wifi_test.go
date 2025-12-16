@@ -12,11 +12,13 @@ import (
 
 //go:generate mockery --name=WiFiHandle --testonly --quiet --outpkg wifi_test --output .
 
+var errMock = errors.New("mock error")
+
 func TestWiFiService_GetAddresses_Error(t *testing.T) {
 	t.Parallel()
 
 	mockHandle := NewWiFiHandle(t)
-	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), errors.New("mock error"))
+	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), errMock)
 
 	wifiService := wifi.New(mockHandle)
 
@@ -47,7 +49,7 @@ func TestWiFiService_GetNames_Error(t *testing.T) {
 	t.Parallel()
 
 	mockHandle := NewWiFiHandle(t)
-	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), errors.New("mock error"))
+	mockHandle.On("Interfaces").Return([]*wifilib.Interface(nil), errMock)
 
 	wifiService := wifi.New(mockHandle)
 
